@@ -1,6 +1,21 @@
+import { Rent } from "../../entities/rent";
 import { Auth } from "../../entities/auth";
 import { Car } from "../../entities/car";
 import { User } from "./../../entities/user";
+
+interface IAvailableCar {
+  id: string;
+  car_id: string;
+  brand: string;
+  model: string;
+  status: string;
+}
+
+interface IListAllCars {
+  id: string;
+  brand: string;
+  model: string;
+}
 
 interface INewUserDb {
   id?: string;
@@ -29,6 +44,17 @@ interface IHandlePostgres {
   removeuser: (data: string) => Promise<IMessageDb>;
   removecar: (data: string) => Promise<IMessageDb>;
   login: (data: Auth) => Promise<ILoginDb>;
+  rentcar: (data: Rent) => Promise<IMessageDb>;
+  availablecar: (car_id: string, status: string) => Promise<IAvailableCar>;
+  listallcars: () => Promise<IListAllCars[]>;
 }
 
-export { IHandlePostgres, IMessageDb, INewUserDb, ILoginDb, INewCarDb };
+export {
+  IHandlePostgres,
+  IMessageDb,
+  INewUserDb,
+  ILoginDb,
+  INewCarDb,
+  IAvailableCar,
+  IListAllCars,
+};
