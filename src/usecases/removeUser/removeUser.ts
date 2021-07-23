@@ -7,7 +7,8 @@ class RemoveUser {
 
   async removeUser(data: IDelUserDTO): Promise<IMessageDb> {
     try {
-      return await this.removeuserUseCase.removeuser(data);
+      await this.removeuserUseCase.removeuser(data);
+      return { message: "User has been removed!" };
     } catch (error) {
       return { message: error.message };
     }

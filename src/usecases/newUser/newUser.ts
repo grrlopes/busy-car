@@ -7,7 +7,8 @@ class NewUser {
 
   async createNewUser(data: IUserDTO): Promise<any> {
     try {
-      return await this.newuserUseCase.createuser(new User(data));
+      await this.newuserUseCase.createuser(new User(data));
+      return { message: "User has been created!" };
     } catch (error) {
       return error.message;
     }

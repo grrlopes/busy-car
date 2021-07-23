@@ -10,7 +10,11 @@ class NewUserUseCase {
    */
   public async createuser(data: IUserDTO): Promise<INewUserDb> {
     data.password = await hash(data.password, 12);
-    return await this.postgreStore.newuser(data);
+    const user = await this.postgreStore.newuser(data);
+    if (!user) {
+      throw new Error("User has not been created!!!");
+    }
+    return user;
   }
 }
 

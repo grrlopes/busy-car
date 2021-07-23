@@ -12,7 +12,6 @@ describe("### Remove User ###", () => {
     const remove_user = await removeuser.removeUser({
       id: "3bbac591-103b-4292-9805-7175e5692fb8",
     });
-
-    expect(remove_user).toEqual({ message: "ok" });
+    expect(remove_user).toEqual({ message: "User has been removed!" });
   });
 });

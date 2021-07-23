@@ -8,7 +8,11 @@ class RemoveUserUseCase {
    * removeuser
    */
   public async removeuser(data: IDelUserDTO): Promise<IMessageDb> {
-    return await this.postgreStore.removeuser(data.id);
+    const rmuser = await this.postgreStore.removeuser(data.id);
+    if (!rmuser) {
+      throw new Error("User has not been removed!!!");
+    }
+    return rmuser;
   }
 }
 

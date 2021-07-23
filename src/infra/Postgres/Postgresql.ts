@@ -1,3 +1,4 @@
+import { Car } from "../../entities/car";
 import { Auth } from "../../entities/auth";
 import { User } from "../../entities/user";
 import {
@@ -5,11 +6,29 @@ import {
   ILoginDb,
   IMessageDb,
   INewUserDb,
+  INewCarDb,
 } from "./IPostgresql";
 
 class Postgrestore implements IHandlePostgres {
   private bucket: User[] = [];
+  private tesla: Car[] = [];
   constructor() {}
+  async removecar(data: string): Promise<IMessageDb> {
+    const resp = this.tesla.find((car) => car.id === data);
+    delete resp?.id;
+    return { message: "ok" };
+  }
+
+  async newcar(data: Car): Promise<INewCarDb> {
+    this.tesla.push({
+      id: data.id,
+      brand: data.brand,
+      model: data.model,
+    });
+    const resp = this.tesla.find((carro) => carro.id === data.id);
+    return { id: resp?.id, brand: resp?.brand, model: resp?.model };
+  }
+
   async login(data: Auth): Promise<ILoginDb> {
     return {
       login: data.login,
