@@ -10,7 +10,7 @@ class RemoveUser {
       await this.removeuserUseCase.removeuser(data);
       return { message: "User has been removed!" };
     } catch (error) {
-      return { message: error.message };
+      return { message: "User has not been removed!!!" };
     }
   }
 }

@@ -57,10 +57,17 @@ class Postgrestore implements IHandlePostgres {
   }
 
   async login(data: Auth): Promise<ILoginDb> {
-    return {
-      login: data.login,
-      password: "$2b$12$BYSOQiV1ShSUgMOt2FAHru9sVwoP0yL50LgO4pemPFViGXwiEuqoy",
-    };
+    return this.db("users").select("*").where("login", "=", data.login).first();
+  }
+
+  async token(login: string, token: string): Promise<ILoginDb> {
+    return this.db("users")
+      .update({
+        token: token,
+        updated_at: new Date()
+      })
+      .where("login", "=", login)
+      .returning(["id", "login", "token"]);
   }
 
   async newuser(data: User): Promise<INewUserDb> {
