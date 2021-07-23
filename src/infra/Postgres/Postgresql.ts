@@ -10,8 +10,8 @@ import {
 } from "./IPostgresql";
 
 class Postgrestore implements IHandlePostgres {
-  private bucket: User[] = [];
-  private tesla: Car[] = [];
+  private readonly bucket: User[] = [];
+  private readonly tesla: Car[] = [];
   constructor() {}
   async removecar(data: string): Promise<IMessageDb> {
     const resp = this.tesla.find((car) => car.id === data);

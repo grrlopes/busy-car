@@ -3,7 +3,6 @@ import { Car } from "../../../entities/car";
 import { ICarDTO } from "./newCarDTO";
 import { NewCarUseCase } from "./newCarUseCase";
 
-
 class NewCar {
   constructor(private readonly newcarUseCase: NewCarUseCase) {}
 

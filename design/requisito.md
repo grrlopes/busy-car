@@ -12,6 +12,7 @@
 ### Admin
 - `DELETE` removeuser
 - `POST` newcar
+- `DELETE` car
 
 ### User
 - `POST` newuser
@@ -19,10 +20,7 @@
 - `PUT` changepass
 
 ### Cars
-- `DELETE` car
-- `GET` rentcar
-- `GET` listallcars
-- `GET` availablecars
-- `POST` returncar
-- `POST` cancelrent
+- `GET` availableCar
+- `POST` cancelRent
+- `POST` rentCar
 
