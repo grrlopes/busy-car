@@ -20,16 +20,19 @@ class Postgrestore implements IHandlePostgres {
   constructor() {
     this.db = Postgresingle.getInstance.getStore();
   }
+
   async listallcars(): Promise<IListAllCars[]> {
-    return this.db("car").select("*");
+    return await this.db("car").select("*");
   }
-  async availablecar(car_id: string): Promise<IAvailableCar> {
-    return this.db("rent")
+
+  async availablecar(carId: string): Promise<IAvailableCar> {
+    return await this.db("rent")
       .select("*")
       .innerJoin("car", "rent.car_id", "=", "car.id")
-      .where("car_id", "=", car_id)
+      .where("car_id", "=", carId)
       .first();
   }
+
   async rentcar(data: Rent): Promise<IMessageDb> {
     return await this.db("rent")
       .insert({
@@ -39,6 +42,10 @@ class Postgrestore implements IHandlePostgres {
         created_at: new Date(),
       })
       .returning("id");
+  }
+
+  async cancelRent(id: string): Promise<IMessageDb> {
+    return await this.db("rent").delete().where("id", id).returning("id");
   }
 
   async removecar(id: string): Promise<IMessageDb> {
@@ -57,11 +64,11 @@ class Postgrestore implements IHandlePostgres {
   }
 
   async login(data: Auth): Promise<ILoginDb> {
-    return this.db("users").select("*").where("login", "=", data.login).first();
+    return await this.db("users").select("*").where("login", "=", data.login).first();
   }
 
   async token(login: string, token: string): Promise<ILoginDb> {
-    return this.db("users")
+    return await this.db("users")
       .update({
         token: token,
         updated_at: new Date()

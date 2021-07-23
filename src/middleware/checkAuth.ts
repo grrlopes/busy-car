@@ -7,7 +7,7 @@ const CheckAuth = function (req: Request, res: Response, next: NextFunction) {
   try {
     jwtPayload = <any>verify(token.split(" ")[1], "Yi2ZyQmYBS7TBXHogEAC");
     res.locals.jwtPayload = jwtPayload;
-    res.locals.username = jwtPayload["login"];
+    res.locals.username = jwtPayload.login;
   } catch (error) {
     res.status(401).send();
     return;

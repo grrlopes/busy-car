@@ -3,7 +3,7 @@ import { RentCar } from "./rentCar";
 import { RentCarUseCase } from "./rentCarUseCase";
 
 const postgres = new Postgrestore();
-const newuserusecase = new RentCarUseCase(postgres);
-const rentcar = new RentCar(newuserusecase);
+const rentcarusecase = new RentCarUseCase(postgres);
+const rentcar = new RentCar(rentcarusecase);
 
 export { rentcar };

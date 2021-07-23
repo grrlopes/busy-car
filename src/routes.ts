@@ -7,7 +7,7 @@ import { login } from "./usecases/login";
 import { removeuser } from "./usecases/removeUser";
 import { rentcar } from "./usecases/rent/rentCar";
 import { CheckAuth } from "./middleware/checkAuth";
-// import {  } from "./usecases/rent/cancelRent";
+import { cancelrent } from "./usecases/rent/cancelRent";
 
 const router = Router();
 
@@ -26,7 +26,7 @@ router.get("/listallcar", CheckAuth, async (req, resp) => {
   return resp.status(200).json(result);
 });
 
-router.post("/newuser", CheckAuth, async (req, resp) => {
+router.post("/newuser", async (req, resp) => {
   const result = await newuser.createNewUser(req.body);
   return resp.status(201).json(result);
 });
@@ -43,6 +43,11 @@ router.post("/rentcar", CheckAuth, async (req, resp) => {
 
 router.post("/login", async (req, resp) => {
   const result = await login.loginUp(req.body);
+  return resp.status(200).json(result);
+});
+
+router.post("/cancelRent", async (req, resp) => {
+  const result = await cancelrent.cancelRent(req.body);
   return resp.status(200).json(result);
 });
 

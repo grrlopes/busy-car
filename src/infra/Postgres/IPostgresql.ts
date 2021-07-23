@@ -34,7 +34,7 @@ interface IMessageDb {
 }
 
 interface ILoginDb {
-  id: string,
+  id: string;
   login: string;
   password: string;
 }
@@ -47,6 +47,7 @@ interface IHandlePostgres {
   login: (data: Auth) => Promise<ILoginDb>;
   token: (login: string, token: string) => Promise<ILoginDb>;
   rentcar: (data: Rent) => Promise<IMessageDb>;
+  cancelRent: (id: string) => Promise<IMessageDb>;
   availablecar: (car_id: string, status: string) => Promise<IAvailableCar>;
   listallcars: () => Promise<IListAllCars[]>;
 }
