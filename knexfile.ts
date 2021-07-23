@@ -4,8 +4,9 @@ const knexcfg = {
   test: {
     client: "postgresql",
     connection: {
-      host: "beluga",
-      database: "busyrent",
+      port: 5432,
+      host: "db01",
+      database: "busy_car",
       user: "postgres",
       password: "postgres",
     },
@@ -23,8 +24,9 @@ const knexcfg = {
   production: {
     client: "postgresql",
     connection: {
-      host: "beluga",
-      database: "busyrent",
+      port: 5432,
+      host: "db01",
+      database: "busy_car",
       user: "postgres",
       password: "postgres",
     },

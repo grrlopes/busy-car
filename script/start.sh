@@ -4,7 +4,6 @@ echo "# NPM #"
 echo "#######"
 npm update
 npm install
-npm audit fix
-npm run build
 npm run migration
-npm run test
+npm run build
+npm run dev

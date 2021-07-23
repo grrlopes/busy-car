@@ -1,0 +1,33 @@
+version: "3.6"
+services:
+  db01:
+    image: postgres:11.12
+    container_name: busycar_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: busy_car
+    networks:
+      - busycar_net
+    ports:
+      - 5432:5432
+  app:
+    image: node:14.16.0
+    container_name: busycar_app
+    restart: on-failure:10
+    depends_on:
+      - db01
+    environment:
+      KNEX_ENV: ${KNEX_ENV}
+    volumes:
+      - .:/usr/app
+    working_dir: /usr/app
+    command: bash ./script/start.sh
+    networks:
+      - busycar_net
+    ports:
+      - 80:3000
+networks:
+  busycar_net:
+    driver: bridge
