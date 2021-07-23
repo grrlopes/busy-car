@@ -16,8 +16,8 @@ class RentCar {
       }
       await this.rentuserUseCase.rentCar(new Rent(data));
       return { message: "Rent has been done!" };
-    } catch (error) {
-      return {message: error.message};
+    } catch {
+      return {message: "Rent has not been done!"};
     }
   }
 }

@@ -10,6 +10,10 @@ beforeAll(async () => {
   await db("car").del();
 });
 
+afterEach(async() => {
+  await db("car").del();
+})
+
 describe("### New Car ###", () => {
   test("Should create a new car", async () => {
     const new_car = await newcar.createNewCar({
