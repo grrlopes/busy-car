@@ -1,4 +1,14 @@
+import { Postgresingle } from "../../src/infra/Postgres/Postgresingle";
 import { newcar } from "../../src/usecases/admin/newCar";
+
+const db = Postgresingle.getInstance.getStore();
+afterAll(() => {
+  db.destroy();
+});
+
+beforeAll(async () => {
+  await db("car").del();
+});
 
 describe("### New Car ###", () => {
   test("Should create a new car", async () => {

@@ -1,4 +1,14 @@
+import { Postgresingle } from "../../src/infra/Postgres/Postgresingle";
 import { newuser } from "../../src/usecases/newUser";
+
+const db = Postgresingle.getInstance.getStore();
+afterAll(() => {
+  db.destroy();
+});
+
+beforeAll(async () => {
+  await db("users").del();
+});
 
 describe("### New User ###", () => {
   test("Should created a new user", async () => {

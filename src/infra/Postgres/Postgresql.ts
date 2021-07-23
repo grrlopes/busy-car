@@ -1,6 +1,8 @@
 import { Car } from "../../entities/car";
 import { Auth } from "../../entities/auth";
 import { User } from "../../entities/user";
+import { Postgresingle } from "./Postgresingle";
+import { Knex } from "knex";
 import {
   IHandlePostgres,
   ILoginDb,
@@ -12,21 +14,23 @@ import {
 class Postgrestore implements IHandlePostgres {
   private readonly bucket: User[] = [];
   private readonly tesla: Car[] = [];
-  constructor() {}
-  async removecar(data: string): Promise<IMessageDb> {
-    const resp = this.tesla.find((car) => car.id === data);
-    delete resp?.id;
-    return { message: "ok" };
+  public db: Knex;
+  constructor() {
+    this.db = Postgresingle.getInstance.getStore();
+  }
+  async removecar(id: string): Promise<IMessageDb> {
+    return await this.db("car").delete().where("id", id).returning("id");
   }
 
   async newcar(data: Car): Promise<INewCarDb> {
-    this.tesla.push({
-      id: data.id,
-      brand: data.brand,
-      model: data.model,
-    });
-    const resp = this.tesla.find((carro) => carro.id === data.id);
-    return { id: resp?.id, brand: resp?.brand, model: resp?.model };
+    return await this.db("car")
+      .insert({
+        id: data.id,
+        brand: data.brand,
+        model: data.model,
+        created_at: new Date(),
+      })
+      .returning("id");
   }
 
   async login(data: Auth): Promise<ILoginDb> {
@@ -37,19 +41,18 @@ class Postgrestore implements IHandlePostgres {
   }
 
   async newuser(data: User): Promise<INewUserDb> {
-    this.bucket.push({
-      id: data.id,
-      password: data.password,
-      user: data.user,
-    });
-    const resp = this.bucket.find((user) => user.id === data.id);
-    return { user: resp?.user, password: resp?.password };
+    return await this.db("users")
+      .insert({
+        id: data.id,
+        login: data.user,
+        password: data.password,
+        created_at: new Date(),
+      })
+      .returning("id");
   }
 
-  async removeuser(data: string): Promise<IMessageDb> {
-    const resp = this.bucket.find((user) => user.id === data);
-    delete resp?.id;
-    return { message: "ok" };
+  async removeuser(id: string): Promise<IMessageDb> {
+    return await this.db("users").delete().where("id", id).returning("id");
   }
 }
 

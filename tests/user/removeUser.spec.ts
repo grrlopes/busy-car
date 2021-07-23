@@ -1,5 +1,15 @@
+import { Postgresingle } from "../../src/infra/Postgres/Postgresingle";
 import { newuser } from "../../src/usecases/newUser";
 import { removeuser } from "../../src/usecases/removeUser";
+
+const db = Postgresingle.getInstance.getStore();
+afterAll(() => {
+  db.destroy();
+});
+
+beforeAll(async () => {
+  await db("users").del();
+});
 
 describe("### Remove User ###", () => {
   test("Should remove an user", async () => {
